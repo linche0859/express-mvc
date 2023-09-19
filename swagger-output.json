@@ -1,0 +1,87 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Posts API",
+    "description": "A simple Express API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/posts/": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "取得全部的貼文",
+        "description": "取得全部的貼文",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "新增一則貼文",
+        "description": "新增一則貼文",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Post information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "貼文標題"
+                },
+                "body": {
+                  "type": "string",
+                  "example": "貼文內容"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Post": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "15af9eea-f389-4f6a-8e7d-131ce0ef5101"
+        },
+        "title": {
+          "type": "string",
+          "example": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+        },
+        "body": {
+          "type": "string",
+          "example": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        }
+      }
+    }
+  }
+}
