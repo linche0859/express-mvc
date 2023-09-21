@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>UUID：<span id="uuid"></span></p>
+    <input type="text" id="message" />
+    <button id="submit">送出</button>
+    <ul id="list"></ul>
+    <script>
+      const uuidElement = document.getElementById('uuid');
+      const inputElement = document.getElementById('message');
+      const submitElement = document.getElementById('submit');
+      const listElement = document.getElementById('list');
+      const host = 'ws://localhost:3000/ws';
+      const socket = new WebSocket(host);
+
+      const appendListItem = (content) => {
+        const itemElement = document.createElement('li');
+        itemElement.innerHTML = content;
+        listElement.appendChild(itemElement);
+      };
+
+      // 建立連線
+      socket.onopen = (res) => {
+        console.log(res);
+      };
+      // 接收訊息
+      socket.onmessage = (res) => {
+        const { context, data } = JSON.parse(res.data);
+        if (context === 'user') {
+          uuidElement.innerHTML = data;
+        } else if (context === 'message') {
+          appendListItem(data);
+        }
+      };
+      // 發送訊息
+      submitElement.addEventListener('click', () => {
+        const { value } = inputElement;
+        appendListItem(value);
+        socket.send(
+          JSON.stringify({
+            context: 'message',
+            data: value,
+          })
+        );
+      });
+    </script>
+  </body>
+</html>
