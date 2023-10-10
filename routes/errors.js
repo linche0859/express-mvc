@@ -16,4 +16,6 @@ router.get('/', catchError(asyncErrorController));
 
 router.get('/normal', catchError(normalController));
 
+router.get('/no-catch', asyncErrorController);
+
 module.exports = router;
